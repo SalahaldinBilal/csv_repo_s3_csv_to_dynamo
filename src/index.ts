@@ -17,7 +17,7 @@ export const handler: S3Handler = async (event) => {
   try {
     const fileObject = event.Records[0].s3.object;
     const bucketName = event.Records[0].s3.bucket.name;
-    const fileName = fileObject.key;
+    const fileName = decodeURIComponent(fileObject.key.replace(/+/g, " "));;
     const tableName = `salah_csv_repo_${fileName.replace(/[^a-zA-Z0-9_.-]/gm, "_")}`;
     const logger = new Logger(fileName);
 
